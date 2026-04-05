@@ -1,0 +1,13 @@
+<h1>{{ note.title }}</h1>
+
+<p><strong>Language:</strong> {{ note.language }}</p>
+
+<p><strong>Tags:</strong> {{ note.tags }}</p>
+
+<p>{{ note.content }}</p>
+
+<a href="/">Back to notes</a>
+
+<a href="{% url 'edit_note' note.id %}">Edit</a>
+
+<a href="{% url 'delete_note' note.id %}">Delete</a>
