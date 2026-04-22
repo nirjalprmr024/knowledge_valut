@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .nav-link-custom {
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-link-custom:hover {
+      background-color: #212529;
+      color: white;
+      transform: translateX(5px);
+    }
+
+    /* 🔥 Popup styling */
+    .custom-toast {
+      padding: 12px 18px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .bg-success {
+    background-color: #28a745;
+  }
+
+  .bg-danger {
+    background-color: #dc3545;
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- 🔥 MESSAGES POPUP -->
+{% if messages %}
+  <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 999;">
+    {% for message in messages %}
+      <div class="custom-toast {% if message.tags == 'error' %}bg-danger{% else %}bg-success{% endif %}"></div>
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="d-flex">
+
+  <!-- Sidebar -->
+  <div class="bg-light p-3" style="width:220px; height:100vh;">
+    <h4 class="mb-4">📝 Notes</h4>
+
+    <a href="/" class="nav-link-custom">Dashboard</a>
+    <a href="/add/" class="nav-link-custom">Add Note</a>
+
+    <form action="/accounts/logout/" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="nav-link-custom text-danger border-0 bg-transparent w-100 text-start">
+        Logout
+      </button>
+    </form>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-grow-1 p-4">
+    {% block content %}{% endblock %}
+  </div>
+
+</div>
+
+<!-- 🔥 Auto hide popup -->
+<script>
+  setTimeout(() => {
+    const toast = document.getElementById("toast-container");
+    if (toast) {
+      toast.style.display = "none";
+    }
+  }, 3000);
+</script>
+
+</body>
+</html>

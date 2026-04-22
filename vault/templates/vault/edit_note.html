@@ -1,10 +1,47 @@
-<h2>Edit Note</h2>
+{% extends "base.html" %}
 
-<form method="POST">
-{% csrf_token %}
+{% block content %}
 
-{{ form.as_p }}
+<div style="max-width:600px; margin:40px auto;">
+  
+  <div style="
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  ">
 
-<button type="submit">Update</button>
+    <h2 style="margin-bottom:20px;">✏️ Edit Note</h2>
 
-</form>
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Title -->
+      <label>Title</label>
+      <input type="text" name="title" value="{{ note.title }}" class="form-control mb-3" required>
+
+      <!-- Content -->
+      <label>Content</label>
+      <textarea name="content" rows="5" class="form-control mb-3" required>{{ note.content }}</textarea>
+
+      <!-- Language -->
+      <label>Language</label>
+      <input type="text" name="language" value="{{ note.language }}" class="form-control mb-3">
+
+      <!-- Tags -->
+      <label>Tags</label>
+      <input type="text" name="tags" value="{{ note.tags }}" class="form-control mb-3">
+
+      <!-- Buttons -->
+      <div class="d-flex gap-2">
+        <button class="btn btn-dark w-100">Update Note</button>
+        <a href="/" class="btn btn-secondary w-100">Cancel</a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

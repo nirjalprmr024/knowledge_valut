@@ -1,9 +1,44 @@
-<h1>Add New Note</h1>
+{% extends "base.html" %}
 
-<form method="POST">
-    {% csrf_token %}
+{% block content %}
 
-    {{ form.as_p }}
+<div style="max-width:600px; margin:40px auto;">
+  
+  <div style="
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  ">
 
-    <button type="submit">Save Note</button>
-</form>
+    <h2 style="margin-bottom:20px;">📝 Add New Note</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Title -->
+      <label>Title</label>
+      <input type="text" name="title" class="form-control mb-3" required>
+
+      <!-- Content -->
+      <label>Content</label>
+      <textarea name="content" rows="5" class="form-control mb-3" required></textarea>
+
+      <!-- Language -->
+      <label>Language</label>
+      <input type="text" name="language" class="form-control mb-3">
+
+      <!-- Tags -->
+      <label>Tags</label>
+      <input type="text" name="tags" class="form-control mb-3">
+
+      <!-- Button -->
+      <button class="btn btn-dark w-100">Save Note</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,22 +1,54 @@
-<h1>My Knowledge Vault</h1>
+{% extends 'base.html' %}
 
-<p>
-<a href="{% url 'add_note' %}">Add Note</a>
+{% block content %}
 
-<form action="{% url 'logout' %}" method="post" style="display:inline;">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h3>My Notes</h3>
+    <p class="text-muted">{{ notes|length }} notes</p>
+  </div>
+
+  <!-- <a href="/add/" class="btn btn-dark">+ Add Note</a> -->
+</div>
+
+{% if notes %}
+<div class="row">
+  {% for note in notes %}
+  <div class="col-md-6 mb-4">
+    <div class="card p-3 shadow-sm border-0">
+      
+      <h5 class="fw-bold">{{ note.title }}</h5>
+      <p class="text-muted">{{ note.content }}</p>
+
+      <hr>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <small>{{ note.created_at }}</small>
+
+        <div>
+          <a href="{% url 'edit_note' note.id %}">✏️</a>
+
+<form action="{% url 'delete_note' note.id %}" method="POST" style="display:inline;">
     {% csrf_token %}
-    <button type="submit">Logout</button>
+    <button type="submit" style="border:none; background:none;">🗑</button>
 </form>
-</p>
+        </div>
+      </div>
 
-<ul>
-{% for note in notes %}
-    <li>
-        <a href="{% url 'note_detail' note.id %}">
-            {{ note.title }}
-        </a>
-    </li>
-{% empty %}
-    <li>No notes yet. Click "Add Note" to create one.</li>
-{% endfor %}
-</ul>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% else %}
+
+<div class="text-center mt-5">
+  <h5>No notes yet</h5>
+  <p class="text-muted">Create your first note to get started</p>
+
+  <a href="/add/" class="btn btn-dark mt-2">+ Add Note</a>
+</div>
+
+{% endif %}
+
+{% endblock %}
